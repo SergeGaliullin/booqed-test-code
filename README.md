@@ -8,7 +8,7 @@ This is a tool that scans repositories of developers and checks if they work wit
 - Unit tests (Using JEST)
 
 Developers that pass all the checks are marked green, others - yellow and red.
-
+Note that there is a limit on how many requests can be sent (thus limiting how many people can be analyzed).
 It was created for Booqed challenge.
 
 ## Available Scripts
