@@ -35,7 +35,7 @@ class CandidateCard extends React.Component {
                     this.setState({knowsReact: false})
                 }
             }
-        } catch (e) {
+        } catch (error) {
             this.setState({networkError: true});
         }
     }
@@ -115,7 +115,7 @@ class CandidateCard extends React.Component {
         }
     }
 
-    onButtonClick = async event => {
+    onButtonClick = async _ => {
         await this.reactCheck();
         await this.reactNativeCheck();
         await this.javaScriptCheck();
@@ -131,8 +131,10 @@ class CandidateCard extends React.Component {
                 <Item.Image size='tiny' src={avatar_url}/>
 
                 <Item.Content>
-                    <Item.Header><a href={html_url} target="_blank"
-                                    rel='noreferrer noopener'>{login}</a></Item.Header>
+                    <Item.Header>
+                        <a href={html_url} target="_blank" rel='noreferrer noopener'>{login}</a>
+                        { this.state.networkError ? <span className="text-red">&nbsp;(Error: couldn't load data)</span> : null}
+                    </Item.Header>
                     <Table celled structured>
                         <Table.Body>
                             <Table.Row>

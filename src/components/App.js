@@ -39,7 +39,10 @@ class App extends React.Component {
                 });
             }
         } catch (e) {
-
+            this.setState({
+                loading: false
+            });
+            alert("Couldn't connect to Github API! Try again later");
         }
 
     }
