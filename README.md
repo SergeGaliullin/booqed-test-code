@@ -1,6 +1,6 @@
 Result: https://sergegaliullin.github.io/booqed-test/
 
-##Description
+## Description
 This is a tool that scans repositories of developers and checks if they work with the following technologies:
 - JavaScript
 - React
