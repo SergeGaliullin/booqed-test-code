@@ -18,7 +18,8 @@ class CandidateCard extends React.Component {
         knowsReactNative: null,
         usesTests: null,
         networkError: false,
-        buttonColor: 'orange'
+        buttonColor: 'orange',
+        analysisOnGoing: false
     };
 
     async reactCheck() {
@@ -106,9 +107,19 @@ class CandidateCard extends React.Component {
     }
 
     async buttonColorUpdate() {
-        if (this.state.knowsJavaScript && this.state.knowsReact && this.state.knowsReactNative && this.state.usesTests) {
+        if (
+            this.state.knowsJavaScript &&
+            this.state.knowsReact &&
+            this.state.knowsReactNative &&
+            this.state.usesTests
+        ) {
             this.setState({buttonColor: 'green'});
-        } else if (!this.state.knowsJavaScript && !this.state.knowsReact && !this.state.knowsReactNative && !this.state.usesTests) {
+        } else if (
+            !this.state.knowsJavaScript &&
+            !this.state.knowsReact &&
+            !this.state.knowsReactNative &&
+            !this.state.usesTests
+        ) {
             this.setState({buttonColor: 'red'});
         } else {
             this.setState({buttonColor: 'yellow'});
@@ -116,11 +127,13 @@ class CandidateCard extends React.Component {
     }
 
     onButtonClick = async _ => {
+        this.setState({analysisOnGoing: true});
         await this.reactCheck();
         await this.reactNativeCheck();
         await this.javaScriptCheck();
         await this.testsUsageCheck();
         await this.buttonColorUpdate();
+        this.setState({analysisOnGoing: false});
     }
 
     render() {
@@ -133,7 +146,8 @@ class CandidateCard extends React.Component {
                 <Item.Content>
                     <Item.Header>
                         <a href={html_url} target="_blank" rel='noreferrer noopener'>{login}</a>
-                        { this.state.networkError ? <span className="text-red">&nbsp;(Error: couldn't load data)</span> : null}
+                        {this.state.networkError ?
+                            <span className="text-red">&nbsp;(Error: couldn't load data)</span> : null}
                     </Item.Header>
                     <Table celled structured>
                         <Table.Body>
@@ -156,7 +170,9 @@ class CandidateCard extends React.Component {
                         </Table.Body>
                     </Table>
                 </Item.Content>
-                <Button color={this.state.buttonColor} onClick={this.onButtonClick}>Analyze</Button>
+                {this.state.analysisOnGoing ?
+                    <Button loading color={this.state.buttonColor} onClick={this.onButtonClick}>Analyze</Button> :
+                    <Button color={this.state.buttonColor} onClick={this.onButtonClick}>Analyze</Button>}
             </Item>
         );
     }
